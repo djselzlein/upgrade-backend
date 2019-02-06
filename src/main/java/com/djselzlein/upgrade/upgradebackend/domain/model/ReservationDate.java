@@ -13,7 +13,7 @@ public class ReservationDate {
 
     @NotNull
     @Column(unique=true)
-    private LocalDate localDate;
+    private LocalDate date;
 
     @ManyToOne
     private Reservation reservation;
@@ -21,8 +21,8 @@ public class ReservationDate {
     public ReservationDate() {
     }
 
-    public ReservationDate(@NotNull LocalDate localDate, Reservation reservation) {
-        this.localDate = localDate;
+    public ReservationDate(LocalDate date, Reservation reservation) {
+        this.date = date;
         this.reservation = reservation;
     }
 
@@ -34,12 +34,12 @@ public class ReservationDate {
         this.id = id;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Reservation getReservation() {
