@@ -21,8 +21,8 @@ public class AvailabilityController {
 
     @GetMapping("/")
     public List<AvailabilityDTO> getAvailabilityForPeriod(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return service.getAvailabilityForPeriod(startDate, endDate);
     }
 

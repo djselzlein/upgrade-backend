@@ -19,6 +19,9 @@ public class AvailabilityService {
     private ReservationDateRepository reservationDateRepository;
 
     public List<AvailabilityDTO> getAvailabilityForPeriod(LocalDate startDate, LocalDate endDate) {
+        startDate = sanitizeStartDate(startDate);
+        endDate = sanitizeEndDate(startDate, endDate);
+
         final List<ReservationDate> reservationDates = reservationDateRepository.findAllByDateBetween(startDate, endDate);
         final Map<LocalDate, Boolean> availabilityMap = new HashMap<>();
 
@@ -39,6 +42,14 @@ public class AvailabilityService {
             availabilityDTOs.add(new AvailabilityDTO(date, reservedDates.get(date) == null));
         }
         return availabilityDTOs;
+    }
+
+    private LocalDate sanitizeStartDate(LocalDate startDate) {
+        return startDate == null ? LocalDate.now() : startDate;
+    }
+
+    private LocalDate sanitizeEndDate(LocalDate startDate, LocalDate endDate) {
+        return endDate == null ? startDate.plusMonths(1) : endDate;
     }
 
 }
