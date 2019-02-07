@@ -26,6 +26,12 @@ public class ReservationDate {
         this.reservation = reservation;
     }
 
+    public ReservationDate(Long id, LocalDate date, Reservation reservation) {
+        this.id = id;
+        this.date = date;
+        this.reservation = reservation;
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,4 +55,5 @@ public class ReservationDate {
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
+
 }

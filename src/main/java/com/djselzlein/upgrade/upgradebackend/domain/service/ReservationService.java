@@ -13,22 +13,28 @@ import javax.transaction.Transactional;
 public class ReservationService {
 
     @Autowired
-    private ReservationRepository reservationRepository;
+    private ReservationRepository repository;
 
     @Autowired
     private ReservationDateRepository reservationDateRepository;
 
     @Transactional
-    public Long create(ReservationDTO reservationDTO) {
-        final Reservation reservation = new Reservation(reservationDTO);
-        reservationRepository.save(reservation);
+    public Long create(ReservationDTO createDTO) {
+        final Reservation reservation = new Reservation(createDTO);
+        repository.save(reservation);
         return reservation.getId();
     }
 
     @Transactional
-    public void cancel(Long reservationId) {
-        reservationDateRepository.deleteAllByReservationId(reservationId);
-        reservationRepository.deleteById(reservationId);
+    public void modify(Long id, ReservationDTO updateDTO) {
+        final Reservation reservation = repository.findWithReservationDatesById(id);
+        repository.save(reservation.merge(updateDTO));
+    }
+
+    @Transactional
+    public void cancel(Long id) {
+        reservationDateRepository.deleteAllByReservationId(id);
+        repository.deleteById(id);
     }
 
 }

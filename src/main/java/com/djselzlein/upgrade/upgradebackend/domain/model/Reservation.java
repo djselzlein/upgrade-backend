@@ -5,7 +5,9 @@ import com.djselzlein.upgrade.upgradebackend.domain.service.dto.ReservationDTO;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -21,7 +23,7 @@ public class Reservation {
     @NotEmpty
     private String userName;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservation", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<ReservationDate> reservationDates;
 
     public Reservation() {
@@ -71,6 +73,26 @@ public class Reservation {
 
     private void addReservationDate(ReservationDate reservationDate) {
         this.reservationDates.add(reservationDate);
+    }
+
+    public Reservation merge(ReservationDTO updateDTO) {
+        this.userEmail = updateDTO.getUserEmail();
+        this.userName = updateDTO.getUserName();
+        mergeDates(updateDTO.getArrivalDate(), updateDTO.getDepartureDate());
+        return this;
+    }
+
+    private void mergeDates(LocalDate arrivalDate, LocalDate departureDate) {
+        Map<LocalDate, Long> existingReservation = new HashMap<>();
+        for (ReservationDate reservationDate : reservationDates) {
+            existingReservation.put(reservationDate.getDate(), reservationDate.getId());
+        }
+
+        this.reservationDates.clear();
+
+        for (LocalDate date = arrivalDate; date.isBefore(departureDate); date = date.plusDays(1)) {
+            this.addReservationDate(new ReservationDate(existingReservation.get(date), date, this));
+        }
     }
 
 }

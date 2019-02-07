@@ -13,10 +13,16 @@ public class ReservationController {
     @Autowired
     private ReservationService service;
 
-    @PostMapping({"", "/"})
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody ReservationDTO reservationDTO) {
-        return service.create(reservationDTO);
+    public Long create(@RequestBody ReservationDTO createDTO) {
+        return service.create(createDTO);
+    }
+
+    @PatchMapping("/{reservationId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void modify(@PathVariable Long reservationId, @RequestBody ReservationDTO updateDTO) {
+        service.modify(reservationId, updateDTO);
     }
 
     @DeleteMapping("/{reservationId}")
