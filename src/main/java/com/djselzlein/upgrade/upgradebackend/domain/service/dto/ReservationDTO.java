@@ -1,15 +1,21 @@
 package com.djselzlein.upgrade.upgradebackend.domain.service.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class ReservationDTO {
 
+    @NotEmpty
     private String userEmail;
 
+    @NotEmpty
     private String userName;
 
+    @NotNull
     private LocalDate arrivalDate;
 
+    @NotNull
     private LocalDate departureDate;
 
     public String getUserEmail() {

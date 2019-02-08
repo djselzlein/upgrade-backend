@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("reservation")
 public class ReservationController {
@@ -15,13 +17,13 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody ReservationDTO createDTO) {
+    public Long create(@RequestBody @Valid ReservationDTO createDTO) {
         return service.create(createDTO);
     }
 
     @PatchMapping("/{reservationId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void modify(@PathVariable Long reservationId, @RequestBody ReservationDTO updateDTO) {
+    public void modify(@PathVariable Long reservationId, @RequestBody @Valid ReservationDTO updateDTO) {
         service.modify(reservationId, updateDTO);
     }
 
