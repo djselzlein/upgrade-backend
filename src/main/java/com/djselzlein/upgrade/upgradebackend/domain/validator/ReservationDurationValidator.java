@@ -19,7 +19,8 @@ public class ReservationDurationValidator implements ConstraintValidator<Reserva
 
     @Override
     public boolean isValid(ReservationDTO reservation, ConstraintValidatorContext ctx) {
-        if (!reservation.getArrivalDate().isBefore(reservation.getDepartureDate())) {
+        if (reservation.getArrivalDate() == null || reservation.getDepartureDate() == null ||
+                !reservation.getArrivalDate().isBefore(reservation.getDepartureDate())) {
             return false;
         }
 
