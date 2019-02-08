@@ -1,9 +1,12 @@
 package com.djselzlein.upgrade.upgradebackend.domain.service.dto;
 
+import com.djselzlein.upgrade.upgradebackend.domain.validator.ReservationDurationConstraint;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+@ReservationDurationConstraint
 public class ReservationDTO {
 
     @NotEmpty
