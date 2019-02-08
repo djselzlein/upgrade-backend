@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = "reservation_date_name_uq", columnNames = {"date"})})
 public class ReservationDate {
 
     @Id
@@ -12,7 +13,6 @@ public class ReservationDate {
     private Long id;
 
     @NotNull
-    @Column(unique=true)
     private LocalDate date;
 
     @ManyToOne

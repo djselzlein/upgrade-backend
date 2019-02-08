@@ -23,7 +23,7 @@ public class Reservation {
     @NotEmpty
     private String userName;
 
-    @OneToMany(mappedBy = "reservation", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReservationDate> reservationDates;
 
     public Reservation() {
